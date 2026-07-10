@@ -419,6 +419,72 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-inner { max-width: var(--content-max); margin: 0 auto; padding: 0 var(--sp-10); width: 100%; }
 /* Mobile hero-inner padding: see css/responsive.css */
 
+.hero-grid { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-12); }
+.hero-left { flex: 1; min-width: 0; max-width: 620px; }
+.hero-right { flex-shrink: 0; width: 340px; display: flex; align-items: center; justify-content: center; }
+
+/* ---- Magazine-style portrait treatment (shown once a real photo is set) ---- */
+.hero-photo-wrap { position: relative; width: 300px; height: 380px; }
+.hero-photo-glow {
+  position: absolute; inset: -26px;
+  border-radius: 42% 58% 55% 45% / 45% 40% 60% 55%;
+  background: var(--gradient-brand);
+  filter: blur(46px);
+  opacity: 0.35;
+}
+.hero-photo-frame {
+  position: relative; width: 100%; height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+}
+.hero-photo-frame img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: contrast(1.05) saturate(1.05);
+}
+.hero-photo-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(11,16,32,0.55) 100%);
+  pointer-events: none;
+}
+.hero-stat-float {
+  position: absolute; bottom: -22px; left: -28px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4) var(--sp-5);
+  box-shadow: var(--shadow-md);
+}
+.hero-stat-float .num {
+  font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700;
+  background: var(--gradient-brand); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-stat-float .label { font-size: var(--text-xs); color: var(--text-secondary); margin-top: 2px; }
+
+/* ---- Fallback monogram (shown until a real photo is set) ---- */
+.hero-monogram-wrap { position: relative; width: 260px; height: 260px; }
+.hero-monogram-glow {
+  position: absolute; inset: -30px; border-radius: 50%;
+  background: var(--gradient-brand-soft); filter: blur(50px);
+}
+.hero-monogram {
+  position: relative; width: 100%; height: 100%; border-radius: 50%;
+  background: var(--gradient-brand);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 4.5rem; color: #fff;
+  box-shadow: var(--shadow-glow-primary);
+}
+
+@media (max-width: 1024px) {
+  .hero-grid { flex-direction: column-reverse; text-align: center; gap: var(--sp-8); }
+  .hero-left { max-width: 100%; }
+  .hero-actions, .floating-cards { justify-content: center; }
+  .hero-stat-float { left: auto; right: -16px; }
+}
+
 .hero-eyebrow { margin-bottom: var(--sp-5); }
 
 .hero-title {
