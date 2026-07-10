@@ -1,1 +1,38 @@
+/* ============================================================
+   ANKIT OS — Responsive Overrides
+   ------------------------------------------------------------
+   Component-scoped micro-adjustments (e.g. hiding the cursor
+   glow below 900px, reduced-motion handling) live next to their
+   component in style.css. This file holds the larger structural
+   breakpoints: sidebar collapse, grid reflow, and section
+   padding changes for tablet/mobile.
+============================================================ */
 
+/* ---------------- Tablet & below: sidebar becomes an off-canvas drawer ---------------- */
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--t-base);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-backdrop.open { display: block; }
+  .main-content { margin-left: 0; }
+  .mobile-menu-toggle { display: flex; }
+}
+
+/* ---------------- Contact panel stacks on tablet ---------------- */
+@media (max-width: 780px) {
+  .contact-panel { grid-template-columns: 1fr; padding: var(--sp-8) var(--sp-5); }
+}
+
+/* ---------------- Mobile ---------------- */
+@media (max-width: 640px) {
+  .section { padding: var(--sp-16) var(--sp-5); }
+  .hero { min-height: auto; padding: var(--sp-20) 0 var(--sp-12); }
+  .hero-inner { padding: 0 var(--sp-5); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .terminal-trigger .kbd-hint { display: none; }
+  .terminal-body { max-height: 320px; }
+}
