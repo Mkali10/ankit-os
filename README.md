@@ -1,4 +1,4 @@
-# ANKIT OS
+# ANKIT Vishwa
 
 A next-generation interactive portfolio built as a futuristic operating system.
 
