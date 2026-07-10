@@ -65,17 +65,20 @@
   <!-- ---------- HERO ---------- -->
   <section id="hero" class="hero">
     <div class="hero-canvas"><canvas id="heroCanvas" aria-hidden="true"></canvas></div>
-    <div class="hero-inner">
-      <span class="hero-availability-badge" id="heroBadge"></span>
-      <div class="eyebrow hero-eyebrow">HELLO, I'M</div>
-      <h2 class="hero-title" id="heroTitle">Loading…</h2>
-      <div class="hero-roles" id="heroRoles"></div>
-      <p class="hero-subtitle" id="heroSubtitle"></p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">Explore Projects</a>
-        <a href="#terminal" class="btn btn-ghost">Ask the Terminal</a>
+    <div class="hero-inner hero-grid">
+      <div class="hero-left">
+        <span class="hero-availability-badge" id="heroBadge"></span>
+        <div class="eyebrow hero-eyebrow">HELLO, I'M</div>
+        <h2 class="hero-title" id="heroTitle">Loading…</h2>
+        <div class="hero-roles" id="heroRoles"></div>
+        <p class="hero-subtitle" id="heroSubtitle"></p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Explore Projects</a>
+          <a href="#terminal" class="btn btn-ghost">Ask the Terminal</a>
+        </div>
+        <div class="floating-cards" id="heroChips"></div>
       </div>
-      <div class="floating-cards" id="heroChips"></div>
+      <div class="hero-right" id="heroRight"></div>
     </div>
     <div class="scroll-hint"><span>SCROLL</span><span class="line"></span></div>
   </section>
@@ -189,7 +192,3 @@
 <script src="js/script.js"></script>
 </body>
 </html>
-
-
-
-
