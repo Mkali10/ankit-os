@@ -157,6 +157,45 @@
     tech.slice(0, 5).forEach(t => {
       chipsEl.appendChild(h("div", { class: "float-card glass" }, [h("span", {}, t)]));
     });
+
+    renderHeroRight();
+  }
+
+  function renderHeroRight() {
+    const rightEl = document.getElementById("heroRight");
+    if (!rightEl) return;
+    rightEl.innerHTML = "";
+
+    const topStat = (PROFILE.stats || []).find(s => s.value > 0);
+    const statFloat = topStat
+      ? h("div", { class: "hero-stat-float" }, [
+          h("div", { class: "num" }, `${topStat.value}${topStat.suffix || ""}`),
+          h("div", { class: "label" }, topStat.label)
+        ])
+      : null;
+
+    function showMonogram() {
+      rightEl.innerHTML = "";
+      rightEl.appendChild(h("div", { class: "hero-monogram-wrap" }, [
+        h("div", { class: "hero-monogram-glow" }),
+        h("div", { class: "hero-monogram" }, (PROFILE.initials || "AA").slice(0, 2).toUpperCase())
+      ]));
+    }
+
+    if (isFilled(PROFILE.photoUrl)) {
+      const img = document.createElement("img");
+      img.alt = PROFILE.name || "Profile photo";
+      img.addEventListener("error", showMonogram);
+      img.src = PROFILE.photoUrl;
+      const wrap = h("div", { class: "hero-photo-wrap" }, [
+        h("div", { class: "hero-photo-glow" }),
+        h("div", { class: "hero-photo-frame" }, [img]),
+        statFloat
+      ].filter(Boolean));
+      rightEl.appendChild(wrap);
+    } else {
+      showMonogram();
+    }
   }
 
   /* ============================================================
@@ -553,7 +592,35 @@
       return ["Downloading résumé…"];
     }
 
-    function runCommand(raw) {
+    async function askAI(question) {
+      const backendUrl = PROFILE.aiBackendUrl;
+      if (isFilled(backendUrl)) {
+        try {
+          setStatus("Thinking…");
+          const res = await fetch(backendUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              question,
+              profile_summary: (typeof ResumeAI !== "undefined" && ResumeAI.buildContextSummary) ? ResumeAI.buildContextSummary() : ""
+            })
+          });
+          if (!res.ok) throw new Error("backend error " + res.status);
+          const data = await res.json();
+          setStatus(DEFAULT_STATUS);
+          if (data && isFilled(data.answer)) return data.answer;
+          throw new Error("empty answer");
+        } catch (err) {
+          setStatus(DEFAULT_STATUS);
+          // Silent fallback — the visitor never sees a broken experience,
+          // they just get the local engine's answer instead.
+          return typeof ResumeAI !== "undefined" ? ResumeAI.ask(question) : "Command not recognized. Type 'help' for options.";
+        }
+      }
+      return typeof ResumeAI !== "undefined" ? ResumeAI.ask(question) : "Command not recognized. Type 'help' for options.";
+    }
+
+    async function runCommand(raw) {
       const cmd = raw.trim();
       if (!cmd) return [];
       const lower = cmd.toLowerCase();
@@ -571,14 +638,14 @@
         return [`cat: ${key}: No such file. Try 'ls' to see available files.`];
       }
 
-      // Fallback: natural-language question, answered live from PROFILE data.
-      if (typeof ResumeAI !== "undefined") return [ResumeAI.ask(cmd)];
-      return ["Command not recognized. Type 'help' for options."];
+      // Fallback: natural-language question — optional real LLM backend,
+      // or the local engine, answered live from PROFILE data either way.
+      return [await askAI(cmd)];
     }
 
-    function handleSubmit(raw) {
+    async function handleSubmit(raw) {
       printPrompt(raw);
-      const output = runCommand(raw);
+      const output = await runCommand(raw);
       if (output === null) { scrollToBottom(); return; } // clear already handled
       output.forEach(line => printLine(line, "term-output"));
       scrollToBottom();
