@@ -1,608 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankit Vishwa — Infrastructure Engineer</title>
+<meta name="description" content="Interactive resume and portfolio of Ankit Vishwa — DevOps Engineer, Cloud Infrastructure & Linux Administrator. Ask the built-in terminal anything, or explore experience, projects, and skills.">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!-- Fonts: preconnect + stylesheet (non-blocking) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<title>Ankit Vishwa</title>
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
-
-<link rel="stylesheet"
-href="css/style.css">
-
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
 </head>
-
 <body>
 
-<div class="sidebar">
-
-<div class="brand">
-
-<img
-src="assets/logo.png"
-class="logo">
-
-<div>
-
-<h2>ANKIT</h2>
-
-<p>Infrastructure Engineer</p>
-
-</div>
-
-</div>
-
-<div class="profile">
-
-<img
-src="assets/profile.png">
-
-<h3>Ankit Vishwa</h3>
-
-<span>DevOps • Cloud • Linux</span>
-
-</div>
-
-<nav>
-
-<a class="active">
-
-<img src="icons/home.svg">
-
-Home
-
-</a>
-
-<a>
-
-<img src="icons/user.svg">
-
-Experience
-
-</a>
-
-<a>
-
-<img src="icons/folder.svg">
-
-Projects
-
-</a>
-
-<a>
-
-<img src="icons/cpu.svg">
-
-Skills
-
-</a>
-
-<a>
-
-<img src="icons/terminal.svg">
-
-Terminal
-
-</a>
-
-<a>
-
-<img src="icons/mail.svg">
-
-Contact
-
-</a>
-
-</nav>
-
-<div class="download">
-
-<a
-href="resume/resume.pdf"
-download>
-
-Download CV
-
-</a>
-
-</div>
-
-<div class="social">
-
-<a>
-
-<img src="icons/github.svg">
-
-</a>
-
-<a>
-
-<img src="icons/linkedin.svg">
-
-</a>
-
-<a>
-
-<img src="icons/mail.svg">
-
-</a>
-
-</div>
-
-</div>
-
-<div class="content">
-
-<section class="hero">
-
-<div class="hero-left">
-
-<div class="badge">
-
-<span></span>
-
-Available for Freelance Projects
-
-</div>
-
-<h4>
-
-HELLO, I'M
-
-</h4>
-
-<h1>
-
-Ankit
-
-<span>Vishwa</span>
-
-</h1>
-
-<h2>
-
-DevOps Engineer
-
-Cloud Infrastructure
-
-Linux Administrator
-
-</h2>
-
-<p>
-
-I design, deploy and secure enterprise infrastructure,
-Linux environments, cloud platforms and VoIP systems
-focused on performance, automation and reliability.
-
-</p>
-
-<div class="hero-buttons">
-
-<a href="#" class="primary-btn">
-
-Explore Projects
-
-</a>
-
-<a href="resume/resume.pdf"
-
-download
-
-class="secondary-btn">
-
-Download CV
-
-</a>
-
-</div>
-
-<div class="company">
-
-<p>
-
-Worked With
-
-</p>
-
-<div class="logos">
-
-<div>Linux</div>
-
-<div>AWS</div>
-
-<div>Fortinet</div>
-
-<div>OpenStack</div>
-
-<div>Asterisk</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="hero-right">
-
-<div class="image-box">
-
-<div class="circle"></div>
-
-<img
-
-src="assets/profile.png"
-
->
-
-</div>
-
-<div class="experience-card">
-
-<h2>
-
-9+
-
-</h2>
-
-<p>
-
-Years Experience
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
+<!-- Ambient background layers -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- ==================== SIDEBAR ==================== -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<aside class="sidebar" id="sidebar" aria-label="Profile and navigation">
+
+  <div class="profile-card glass">
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar" id="profileAvatar" aria-hidden="true"></div>
+      <span class="status-indicator" title="Available"></span>
+    </div>
+    <h1 class="profile-name" id="profileName">Loading…</h1>
+    <p class="profile-title" id="profileTitle"></p>
+    <span class="availability-pill" id="availabilityPill"></span>
+    <a class="btn btn-primary btn-block" id="downloadResumeBtn" href="#">
+      <span data-icon="download" aria-hidden="true"></span> Download CV
+    </a>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Section navigation">
+    <ul>
+      <li><a href="#hero" class="nav-link active" data-section="hero"><span class="nav-icon" data-icon="home" aria-hidden="true"></span>Home</a></li>
+      <li><a href="#experience" class="nav-link" data-section="experience"><span class="nav-icon" data-icon="briefcase" aria-hidden="true"></span>Experience</a></li>
+      <li><a href="#projects" class="nav-link" data-section="projects"><span class="nav-icon" data-icon="grid" aria-hidden="true"></span>Projects</a></li>
+      <li><a href="#skills" class="nav-link" data-section="skills"><span class="nav-icon" data-icon="bars" aria-hidden="true"></span>Skills</a></li>
+      <li><a href="#terminal" class="nav-link" data-section="terminal"><span class="nav-icon" data-icon="terminal" aria-hidden="true"></span>Terminal</a></li>
+      <li><a href="#contact" class="nav-link" data-section="contact"><span class="nav-icon" data-icon="mail" aria-hidden="true"></span>Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="social-icons" id="socialIcons" aria-label="Social links"></div>
+  </div>
+</aside>
+
+<button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+  <span class="icon-menu" data-icon="menu" aria-hidden="true"></span>
+  <span class="icon-close" data-icon="close" aria-hidden="true"></span>
+</button>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main class="main-content" id="mainContent">
+
+  <!-- ---------- HERO ---------- -->
+  <section id="hero" class="hero">
+    <div class="hero-canvas"><canvas id="heroCanvas" aria-hidden="true"></canvas></div>
+    <div class="hero-inner">
+      <span class="hero-availability-badge" id="heroBadge"></span>
+      <div class="eyebrow hero-eyebrow">HELLO, I'M</div>
+      <h2 class="hero-title" id="heroTitle">Loading…</h2>
+      <div class="hero-roles" id="heroRoles"></div>
+      <p class="hero-subtitle" id="heroSubtitle"></p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">Explore Projects</a>
+        <a href="#terminal" class="btn btn-ghost">Ask the Terminal</a>
+      </div>
+      <div class="floating-cards" id="heroChips"></div>
+    </div>
+    <div class="scroll-hint"><span>SCROLL</span><span class="line"></span></div>
+  </section>
+
+  <!-- ---------- EXPERIENCE ---------- -->
+  <section id="experience" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Career</div>
+      <h2>Professional Journey</h2>
+      <p>Building enterprise infrastructure, cloud environments, networking solutions and VoIP platforms.</p>
+    </div>
+    <div class="timeline" id="timelineContainer"></div>
+  </section>
+
+  <!-- ---------- PROJECTS ---------- -->
+  <section id="projects" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Featured Work</div>
+      <h2>Projects &amp; Solutions</h2>
+      <p>Real-world infrastructure, networking and automation projects.</p>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </section>
+
+  <!-- ---------- SKILLS ---------- -->
+  <section id="skills" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Toolbox</div>
+      <h2>Skills</h2>
+      <p>Grouped by domain — Cloud, Linux, Networking, VoIP, Programming and DevOps.</p>
+    </div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </section>
+
+  <!-- ---------- CERTIFICATIONS (auto-hides while empty) ---------- -->
+  <section id="certifications" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Credentials</div>
+      <h2>Certifications</h2>
+      <p>Formal recognitions and completed programs.</p>
+    </div>
+    <div class="certs-grid" id="certsGrid"></div>
+  </section>
+
+  <!-- ---------- STATS ---------- -->
+  <section id="stats" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">By The Numbers</div>
+      <h2>Impact at a Glance</h2>
+    </div>
+    <div class="stats-grid" id="statsGrid"></div>
+  </section>
+
+  <!-- ---------- TERMINAL ---------- -->
+  <section id="terminal" class="section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Ask Anything</div>
+      <h2>Interactive Terminal</h2>
+      <p>Run a command, or just type a plain-English question about the experience, projects, or skills above.</p>
+    </div>
+    <div class="terminal-window reveal" id="terminalWindow">
+      <div class="terminal-chrome">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">guest@ankit-os: ~</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="voice-orb-wrap" id="voiceOrb">
+          <div class="voice-orb"></div>
+          <span class="voice-orb-icon" data-icon="mic" aria-hidden="true"></span>
+        </div>
+        <div class="voice-orb-status" id="voiceStatus">Type, or tap the mic, to ask about Ankit</div>
+        <div class="terminal-output" id="terminalOutput"></div>
+        <div class="terminal-input-line">
+          <span class="terminal-prompt">guest@ankit-os:~$</span>
+          <input type="text" id="terminalInput" class="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal input — type a command or question">
+          <button type="button" class="voice-btn" id="micBtn" data-icon="mic" aria-label="Ask by voice" hidden></button>
+          <button type="button" class="voice-btn" id="speakBtn" data-icon="speaker" aria-label="Read answers aloud" aria-pressed="false"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- CONTACT ---------- -->
+  <section id="contact" class="section">
+    <div class="contact-panel reveal">
+      <div class="contact-copy">
+        <div class="eyebrow">Let's Talk</div>
+        <h2>Get in touch</h2>
+        <p>Open to freelance and full-time opportunities — reach out directly, or ask the terminal above first.</p>
+      </div>
+      <div class="contact-list" id="contactList"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>© <span id="yearNow"></span> Ankit Vishwa · Built as a living resume, not a static page.</span>
+    <span>Type <code>help</code> in the terminal, or press ⌘K to jump there</span>
+  </footer>
+</main>
+
+<!-- Floating quick-access: scrolls to and focuses the Terminal section -->
+<button class="terminal-trigger" id="terminalTrigger" aria-label="Jump to interactive terminal">
+  <span data-icon="terminalPrompt" aria-hidden="true"></span> Ask Terminal <span class="kbd-hint">⌘K</span>
+</button>
+
+<script src="js/data.js"></script>
+<script src="js/ai-agent.js"></script>
+<script src="js/particles.js"></script>
 <script src="js/script.js"></script>
-
 </body>
-
 </html>
-
-<section class="experience" id="experience">
-
-<div class="section-title">
-
-<span>EXPERIENCE</span>
-
-<h2>Professional Journey</h2>
-
-<p>
-Building enterprise infrastructure, cloud environments,
-networking solutions and VoIP platforms.
-</p>
-
-</div>
-
-<div class="timeline">
-
-<div class="timeline-item active">
-
-<div class="year">
-
-Mar 2026 - Present
-
-</div>
-
-<div class="job">
-
-<h3>Freelance DevOps & Cloud Infrastructure Engineer</h3>
-
-<h4>Self Employed</h4>
-
-<p>
-
-Linux Administration • AWS • VoIP • Automation • Networking • Security
-
-</p>
-
-<ul>
-
-<li>Deploy Linux production servers</li>
-
-<li>AWS Infrastructure</li>
-
-<li>Asterisk & FreePBX Deployment</li>
-
-<li>Server Hardening</li>
-
-<li>Automation using Bash & Python</li>
-
-</ul>
-
-</div>
-
-</div>
-
-
-
-<div class="timeline-item">
-
-<div class="year">
-
-2024 - 2026
-
-</div>
-
-<div class="job">
-
-<h3>IT Lead</h3>
-
-<h4>PolicyX.com</h4>
-
-<p>
-
-Infrastructure • Cloud • Firewall • Linux
-
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="timeline-item">
-
-<div class="year">
-
-2022 - 2024
-
-</div>
-
-<div class="job">
-
-<h3>Senior System Engineer</h3>
-
-<h4>Deepija Telecom</h4>
-
-<p>
-
-VoIP • Linux • Networking
-
-</p>
-
-</div>
-
-</div>
-
-
-
-<div class="timeline-item">
-
-<div class="year">
-
-2021 - 2022
-
-</div>
-
-<div class="job">
-
-<h3>Network Engineer</h3>
-
-<h4>Bharti Hexacom</h4>
-
-<p>
-
-GPON • MPLS • OLT • Routing
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="projects" id="projects">
-
-<div class="section-title">
-
-<span>FEATURED PROJECTS</span>
-
-<h2>Projects & Solutions</h2>
-
-<p>
-
-Real-world infrastructure, networking and automation projects.
-
-</p>
-
-</div>
-
-<div class="project-grid">
-
-<div class="project-card">
-
-<div class="project-top">
-
-<span class="tag">Networking</span>
-
-</div>
-
-<h3>
-
-Port Intent Detector
-
-</h3>
-
-<p>
-
-Network traffic monitoring and intelligent port analysis solution
-for infrastructure environments.
-
-</p>
-
-<div class="tech">
-
-<span>Linux</span>
-
-<span>Python</span>
-
-<span>TCP/IP</span>
-
-<span>Automation</span>
-
-</div>
-
-<div class="buttons">
-
-<a href="#">Case Study</a>
-
-<a href="#">Architecture</a>
-
-</div>
-
-</div>
-
-
-
-<div class="project-card">
-
-<div class="project-top">
-
-<span class="tag">Cloud</span>
-
-</div>
-
-<h3>
-
-Enterprise Infrastructure
-
-</h3>
-
-<p>
-
-Deployment and management of Linux servers,
-cloud infrastructure and enterprise networking.
-
-</p>
-
-<div class="tech">
-
-<span>AWS</span>
-
-<span>Ubuntu</span>
-
-<span>Rocky</span>
-
-<span>Nginx</span>
-
-</div>
-
-<div class="buttons">
-
-<a href="#">Details</a>
-
-<a href="#">Tech Stack</a>
-
-</div>
-
-</div>
-
-
-
-<div class="project-card">
-
-<div class="project-top">
-
-<span class="tag">VoIP</span>
-
-</div>
-
-<h3>
-
-VoIP Infrastructure
-
-</h3>
-
-<p>
-
-Enterprise Asterisk, SIP trunk,
-IVR and PBX deployment solutions.
-
-</p>
-
-<div class="tech">
-
-<span>Asterisk</span>
-
-<span>FreePBX</span>
-
-<span>SIP</span>
-
-<span>WebRTC</span>
-
-</div>
-
-<div class="buttons">
-
-<a href="#">Overview</a>
-
-<a href="#">Diagram</a>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<section class="stats">
-
-    <div class="stat-card">
-
-        <h2 data-count="9">0</h2>
-
-        <p>Years Experience</p>
-
-    </div>
-
-    <div class="stat-card">
-
-        <h2 data-count="50">0</h2>
-
-        <p>Projects Completed</p>
-
-    </div>
-
-    <div class="stat-card">
-
-        <h2 data-count="100">0</h2>
-
-        <p>Servers Managed</p>
-
-    </div>
-
-    <div class="stat-card">
-
-        <h2 data-count="24">0</h2>
-
-        <p>Hours Support</p>
-
-    </div>
-
-</section>
 
 
 
